@@ -7,7 +7,14 @@ Nama *Project* : **Movie Recommendation - CF and CBF**
 
 ## Project Overview
 
-Sistem rekomendasi film adalah teknologi yang membantu pengguna menemukan film berdasarkan preferensi mereka. Contohnya dapat dilihat pada platform seperti Netflix, Prime Video, ViU dan WeTV, yang menggunakan data perilaku pengguna, seperti riwayat tontonan dan rating film, untuk memberikan saran yang relevan. Sistem ini memanfaatkan teknik collaborative filltering, yang menangkap kesamaan antara pengguna atau film berdasarkan pola historis. Namun, tantangan seperti kelangkaan data dan pertumbuhan jumlah film dan pengguna memerlukan strategi khusus untuk menjaga akurasi dan relevansi rekomendasi.
+Sistem rekomendasi film adalah teknologi yang dirancang untuk membantu pengguna menemukan film yang sesuai dengan preferensi mereka [[1]](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556). Contohnya dapat ditemukan pada platform seperti Netflix, Prime Video, ViU, dan WeTV, yang memanfaatkan data perilaku pengguna seperti riwayat tontonan dan penilaian (rating) film untuk memberikan saran yang relevan. Sistem ini menggunakan berbagai teknik, salah satunya adalah **Collaborative Filtering**, yang mengidentifikasi pola kesamaan antara pengguna atau film berdasarkan data historis.
+
+Namun, dalam pengembangan sistem ini, terdapat beberapa masalah yang harus diatasi:  
+1. **Kelangkaan Data**: Banyak pengguna memberikan sedikit atau bahkan tidak ada penilaian terhadap film, sehingga sistem kekurangan informasi untuk memberikan rekomendasi yang relevan.  
+2. **Lonjakan Data**: Dengan meningkatnya jumlah pengguna dan film, sistem harus mampu menangani volume data yang besar sambil tetap mempertahankan akurasi rekomendasi.  
+3. **Bias Data**: Sistem sering kali cenderung merekomendasikan film populer, sehingga genre atau film yang kurang dikenal menjadi kurang terekspos.  
+
+Latar belakang pemilihan masalah ini didasari oleh kebutuhan industri hiburan untuk meningkatkan keterlibatan pengguna melalui personalisasi konten. Dengan menyediakan rekomendasi yang tepat, platform dapat mempertahankan pelanggan lebih lama dan meningkatkan kepuasan pengguna. Oleh karena itu, pengembangan sistem rekomendasi yang efektif sangat penting untuk mengatasi tantangan ini sekaligus mendukung pengalaman pengguna yang lebih baik.
 
 referensi dari proyek overview yang saya buat dapat dilihat dari tautan berikut :
 [Jurnal: Techno.Com](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556)
@@ -49,30 +56,250 @@ Variabel-variabel pada movie-recommendation-data adalah sebagai berikut :
 - ratings : merupakan daftar penilaian yang diberikan pengguna terhadap movie.
 - tags : merupakan daftar kata kunci dari movie tersebut.
 
-tahapan yang dilakukan mengenai data adalah dengan melakukan exploratory data analysis, yaitu dengan melihat-lihat hubungan antar variabel bersarkan id. Serta menggabungkan seluruh variabel movie_all berdasarkan movieId dan variabel user_all berdasarkan userId
+Sebelum melakukan *modeling* dan *evaluation* dengan algoritma *Machine Learning* pada Notebook "Google Colaboratory", mari melihat sekilas pada *dataset* yang digunakan. Di bawah ini akan ditampilkan cuplikan dari dataset.
+
+Tabel 1 : Berikut adalah tampilan data links yang terdiri dari 9742 baris data dan 3 kolom:
+
+|	|movieId	|imdbId	|tmdbId|
+|-|---------|-------|------|
+|0	|1	|114709	|862.0|
+|1	|2	|113497	|8844.0|
+|2	|3	|113228	|15602.0|
+|3	|4	|114885	|31357.0|
+|4	|5	|113041	|11862.0|
+|...	|...	|...	|...|
+|9737	|193581	|5476944	|432131.0|
+|9738	|193583	|5914996	|445030.0|
+|9739	|193585	|6397426	|479308.0|
+|9740	|193587	|8391976	|483455.0|
+|9741	|193609	|101726	|37891.0|
+
+Tabel 2 : Berikut adalah tampilan data movies (daftar film) yang terdiri dari 9742 baris data dan 3 kolom, terdiri dari id, judul dan genre movie nya:
+
+|	  |movieId	|title	|genres|
+|---|---------|-------|------|
+|0	|1	|Toy Story (1995)	|Adventure, Animation, Children, Comedy, Fantasy|
+|1	|2	|Jumanji (1995)	|Adventure, Children, Fantasy|
+|2	|3	|Grumpier Old Men (1995)	|Comedy, Romance|
+|3	|4	|Waiting to Exhale (1995)	|Comedy, Drama, Romance|
+|4	|5	|Father of the Bride Part II (1995)	|Comedy|
+|...	|...	|...	|...|
+|9737	|193581	|Black Butler: Book of the Atlantic (2017)	|Action, Animation, Comedy, Fantasy|
+|9738	|193583	|No Game No Life: Zero (2017)	|Animation, Comedy, Fantasy|
+|9739	|193585	|Flint (2017)	|Drama|
+|9740	|193587	|Bungo Stray Dogs: Dead Apple (2018)	|Action, Animation|
+|9741	|193609	|Andrew Dice Clay: Dice Rules (1991)	|Comedy|
+
+Tabel 3 : Berikut adalah tampilan data ratings yang terdiri dari 100836 baris data dan 4 kolom, data yang berasal dari hasil rating yang diberikan penonton untuk sebuah movie. Data ini berisikan id user yang memberi rating, movie id yang diberikan rating, nilai ratingnya dan waktu saat user memberikan rating:
+
+|	|userId	|movieId	|rating	|timestamp|
+|-|-------|---------|-------|---------|
+|0	|1	|1	|4.0	|964982703|
+|1	|1	|3	|4.0	|964981247|
+|2	|1	|6	|4.0	|964982224|
+|3	|1	|47	|5.0	|964983815|
+|4	|1	|50	|5.0	|964982931|
+|...	|...	|...	|...	|...|
+|100831	|610	|166534	|4.0	|1493848402|
+|100832	|610	|168248	|5.0	|1493850091|
+|100833	|610	|168250	|5.0	|1494273047|
+|100834	|610	|168252	|5.0	|1493846352|
+|100835	|610	|170875	|3.0	|1493846415|
+
+Dari tabel di atas, diketahui bahwa nilai maksimum ratings adalah 5.0 atau 5 dan nilai minimumnya adalah 0.5. Artinya, skala rating berkisar antara 0.5 hingga 5. 
+
+Tabel 3 : Berikut adalah tampilan data tags (tagar) yang terdiri dari 3683 baris data dan 4 kolom, yang berisi tagar konteks yang relevan dengan movie yang ditonton, movie id nya dan waktu memberikan tag nya:
+
+|	|userId	|movieId	|tag	|timestamp|
+|-|-------|---------|-----|---------|
+|0	|2	|60756	|funny	|1445714994|
+|1	|2	|60756	|Highly quotable	|1445714996|
+|2	|2	|60756	|will ferrell	|1445714992|
+|3	|2	|89774	|Boxing story	|1445715207|
+|4	|2	|89774	|MMA	|1445715200|
+|...	|...	|...	|...	|...|
+|3678	|606	|7382	|for katie	|1171234019|
+|3679	|606	|7936	|austere	|1173392334|
+|3680	|610	|3265	|gun fu	|1493843984|
+|3681	|610	|3265	|heroic bloodshed	|1493843978|
+|3682	|610	|168248	|Heroic Bloodshed	|1493844270|
+
 
 ## Data Preparation
 
-Data preparation yang digunakan oleh saya yaitu :
+Proses data preparation adalah langkah penting dalam mempersiapkan data agar dapat digunakan secara efektif dalam pengembangan model machine learning. Berikut adalah tahapan yang dilakukan dalam proyek ini:
 
-- Menangani data kosong: Mengecek apakah ada data yang hilang dan menghapus baris yang memiliki nilai kosong.
-- Pembagian data: Memisahkan data menjadi dua set, yaitu data untuk pelatihan dan untuk validasi.
-- Menggabungkan kolom: Mengintegrasikan beberapa kolom dengan ID unik agar data lebih terstruktur.
-- Menyusun data: Mengurutkan data berdasarkan ID film (movieId) secara menaik.
-- Mengatasi duplikasi: Mengidentifikasi dan menghapus data yang memiliki nilai atau informasi yang sama.
-- Mengonversi data ke dalam list: Mengubah struktur data menjadi dalam bentuk list.
-- Membuat kamus data: Mengorganisasi data ke dalam format dictionary.
-- Menggunakan TfidfVectorizer: Mengaplikasikan teknik pembobotan untuk memperhitungkan pentingnya kata-kata dalam data.
-- Melakukan pembersihan data: Menyelesaikan masalah yang bisa mengganggu hasil analisis atau pelatihan model.
-- Pemetaan data: Menyesuaikan dan menghubungkan data dengan format yang diperlukan untuk analisis.
+1. Menggabungkan Movie
+   
+Menggabungkan berbagai file (seperti links, movies, ratings, dan tags) menggunakan fungsi np.concatenate().
+Proses ini bertujuan untuk menggabungkan data berdasarkan kolom movieId, sehingga seluruh data terkait film dapat diintegrasikan dalam satu tempat.
+Data yang dihasilkan diurutkan menggunakan np.sort() dan nilai duplikat dihapus dengan np.unique().
+
+Output : Jumlah keseluruhan movieId yang unik.
+
+2. Menggabungkan Seluruh User
+   
+Menggabungkan data userId dari file ratings dan tags menggunakan np.concatenate().
+Data diurutkan dan nilai duplikat dihapus.
+Proses ini memastikan bahwa semua informasi pengguna diintegrasikan tanpa ada pengulangan.
+
+Output : Jumlah keseluruhan userId yang unik.
+
+3. Membuat Dataframe movie_info
+
+Data dari links, movies, ratings, dan tags digabungkan menjadi satu dataframe menggunakan pd.concat().
+Selanjutnya, dataframe movie_info digabungkan dengan ratings berdasarkan movieId menggunakan pd.merge().
+Tujuan: Untuk menyatukan seluruh informasi film dengan data rating pengguna.
+Setelah penggabungan, dilakukan pengecekan missing values dengan movie.isnull().sum() untuk mengetahui data yang perlu dibersihkan atau diimputasi.
+
+4. Mengelompokkan Rating Berdasarkan movieId
+
+Data rating dikelompokkan menggunakan movie.groupby('movieId').sum().
+Langkah ini memungkinkan kita untuk menganalisis total skor atau jumlah interaksi pada setiap film.
+
+5. Menggabungkan Data dengan Fitur Nama Movie
+
+Data rating disimpan dalam variabel all_movie_rate.
+Kemudian, dataframe movies digabungkan dengan all_movie_rate berdasarkan movieId menggunakan pd.merge(). Proses ini menambahkan informasi title dan genres dari setiap film.
+Selanjutnya, dataframe tags digabungkan dengan hasil penggabungan sebelumnya berdasarkan movieId untuk menambahkan kata kunci (tags) yang relevan.
+Hasil akhir disimpan dalam variabel all_movie.
+
+6. Mengatasi Missing Value
+
+Mengecek missing value pada dataset all_movie dengan all_movie.isnull().sum().
+Kolom tag ditemukan memiliki 52.549 data kosong. Data ini dibersihkan menggunakan fungsi dropna(), yang menghapus seluruh baris dengan nilai kosong.
+|       |0|
+|-------|-|
+|userId	|0|
+|movieId	|0|
+|rating	|0|
+|timestamp	|0|
+|title	|0|
+|genres	|0|
+|tag	|52549|
+
+Output: Dataset baru, all_movie_clean, dengan jumlah baris berkurang dari 285.762 menjadi 233.213.
+Memastikan kembali tidak ada missing value pada dataset dengan all_movie_clean.isnull().sum().
+
+7. Mengurutkan Data Berdasarkan movieId
+
+Dataset all_movie_clean diurutkan berdasarkan kolom movieId menggunakan sort_values() dan disimpan dalam variabel fix_movie.
+Hal ini bertujuan untuk mempermudah proses pemetaan dan analisis.
+Mengecek jumlah movieId unik dengan len(fix_movie.movieId.unique()).
+
+8. Menghapus Data Duplikat
+
+Dataset fix_movie disimpan kembali ke dalam variabel preparation.
+Dilakukan penghapusan data duplikat berdasarkan kolom movieId dengan drop_duplicates('movieId').
+Langkah ini memastikan setiap film hanya muncul sekali dalam dataset.
+
+9. Konversi Data ke Bentuk List
+
+Data dari kolom movieId, title, dan genres diubah menjadi list menggunakan fungsi tolist():
+movie_id: List dari semua movieId.
+movie_name: List dari semua judul film.
+movie_genre: List dari semua genre film.
+
+Output: Tiga variabel berbentuk list dengan jumlah elemen yang sama.
+
+10. Membuat Dictionary Dataframe
+
+Menggunakan tiga list yang telah dibuat (movie_id, movie_name, movie_genre), dibuat sebuah dataframe movie_new dengan pasangan key-value:
+id: Berisi movie_id.
+movie_name: Berisi movie_name.
+genre: Berisi movie_genre.
+Dataframe ini merupakan hasil akhir dari data preparation, yang siap digunakan untuk pemodelan.
+
 
 ## Modeling and Result
 
 - Proses pemodelan yang saya terapkan pada data ini melibatkan dua algoritma machine learning, yaitu content-based filtering dan collaborative filtering. Pada content-based filtering, saya fokus pada preferensi pengguna berdasarkan interaksi mereka sebelumnya dengan film yang telah mereka tonton. Sedangkan pada collaborative filtering, saya menggunakan data rating dari pengguna untuk merekomendasikan film yang paling disukai.
 
 - Berikut adalah hasil dari kedua algoritma tersebut :
+ ### Content-Based Filtering
 
-1. hasil dari **content based filtering**  
+**Cara Kerja**:
+
+Prinsip Dasar: Rekomendasi diberikan berdasarkan karakteristik item (film) yang disukai pengguna di masa lalu. Menerapkan konsep TF-IDF (Term Frequency-Inverse Document Frequency) adalah sebuah metode yang digunakan untuk mengukur seberapa penting suatu kata dalam sebuah dokumen, dengan cara ini, kata-kata yang relevan dan spesifik dalam konteks dokumen akan lebih dihargai daripada kata yang terlalu umum. Lalu Cosine Similarity yang digunakan untuk mengukur seberapa mirip dua item (misalnya dua film atau dua pengguna) berdasarkan fitur atau interaksi pengguna dengan item tersebut. Seperti mengukur seberapa mirip film berdasarkan genre atau deskripsi film.
+
+Langkah:
+1. Representasi Data: Setiap item direpresentasikan menggunakan fitur-fitur tertentu, misalnya genre film.
+2. Vectorization: Fitur item diubah menjadi representasi vektor numerik menggunakan metode seperti TF-IDF Vectorizer.
+3. Kesamaan Item: Menghitung kesamaan antar item menggunakan metrik seperti Cosine Similarity.
+4. Rekomendasi: Film yang mirip dengan film yang sudah diberi rating tinggi oleh pengguna direkomendasikan.
+
+**Kelebihan**:
+- Tidak memerlukan data dari pengguna lain (independen per pengguna).
+- Rekomendasi relevan dengan preferensi spesifik pengguna.
+- Mudah diimplementasikan untuk dataset dengan deskripsi item yang kaya.
+
+**Kekurangan**:
+- Cold Start Problem untuk Item Baru: Tidak dapat merekomendasikan item yang tidak memiliki informasi fitur (deskripsi).
+- Overspecialization: Rekomendasi hanya berpusat pada item serupa, sehingga sulit memberikan variasi.
+- Tidak memanfaatkan data dari pengguna lain untuk meningkatkan rekomendasi.
+
+**Parameter yang Digunakan**:
+
+1.TF-IDF Vectorizer:
+- max_features: Jumlah maksimal kata unik yang digunakan untuk representasi.
+- ngram_range: Panjang n-gram untuk analisis (misalnya unigram, bigram).
+- min_df & max_df: Frekuensi minimum dan maksimum kata yang akan dipertimbangkan.
+  
+2.Cosine Similarity: Tidak memiliki parameter langsung, tetapi dihitung berdasarkan vektor item.
+
+### Collaborative Filtering
+
+**Cara Kerja**:
+
+Prinsip Dasar: Rekomendasi diberikan berdasarkan perilaku atau pola interaksi antar pengguna dan item. Konsep model yang digunakan adalah RecommenderNet yang merupakan sebuah model neural network yang digunakan untuk implementasi collaborative filtering dalam sistem rekomendasi. Model ini memanfaatkan konsep embedding untuk pengguna dan item (movie) untuk mempelajari representasi numerik yang menggambarkan preferensi pengguna terhadap item tersebut.
+
+Pendekatan:
+
+1. User-Based Collaborative Filtering:
+- Mencari pengguna dengan pola preferensi serupa (misalnya riwayat rating film).
+- Rekomendasi diberikan berdasarkan apa yang disukai oleh pengguna serupa.
+
+2. Item-Based Collaborative Filtering:
+- Mencari item yang sering dinilai sama oleh pengguna.
+- Rekomendasi diberikan berdasarkan hubungan antara item tersebut.
+
+3. Model-Based Collaborative Filtering (RecommenderNet):
+
+Struktur dan Proses RecommenderNet:
+
+1. Embedding Layer:
+- User Embedding: Setiap pengguna diwakili oleh vektor embedding yang berisi sejumlah nilai (ditentukan oleh embedding_size). Embedding ini memungkinkan model untuk mempelajari representasi unik dari setiap pengguna berdasarkan interaksi mereka dengan item (film).
+- Movie Embedding: Setiap film juga diwakili oleh vektor embedding yang mirip dengan embedding pengguna. Model mempelajari representasi film yang berbeda berdasarkan interaksi yang diterima oleh film tersebut dari berbagai pengguna.
+- User Bias dan Movie Bias: Selain embedding, model ini juga mempelajari bias untuk masing-masing pengguna dan film, yang mencerminkan preferensi umum pengguna dan atribut film.
+
+2. Dot Product:
+- Untuk memprediksi rating atau preferensi pengguna terhadap sebuah film, dot product antara vektor embedding pengguna dan vektor embedding film dihitung. Proses ini menghasilkan angka yang merepresentasikan tingkat interaksi atau kesukaan pengguna terhadap film tersebut.
+
+3. Penambahan Bias:
+- Setelah perhitungan dot product, nilai bias untuk pengguna dan film ditambahkan. Bias ini membantu model menyesuaikan prediksi dengan preferensi umum yang lebih tinggi atau lebih rendah, misalnya, pengguna yang selalu memberikan rating tinggi atau film dengan rating tinggi secara umum.
+
+4. Aktivasi Sigmoid:
+
+- Hasil dari semua operasi ini, yang terdiri dari dot product dan penambahan bias, kemudian diproses menggunakan fungsi sigmoid untuk mendapatkan output yang terletak antara 0 dan 1. Fungsi sigmoid ini digunakan untuk memodelkan kemungkinan bahwa pengguna akan menyukai film tersebut atau tidak.
+
+5. Proses Training:
+- Model dilatih menggunakan data interaksi pengguna (misalnya, rating atau preferensi) terhadap film. Selama pelatihan, model mengoptimalkan parameter (embedding, bias) menggunakan algoritma optimasi seperti Adam untuk meminimalkan fungsi kerugian (loss function), yang biasanya menggunakan binary cross-entropy atau mean squared error.
+- Fungsi binary cross-entropy sering digunakan jika rating dikategorikan menjadi dua kelas (misalnya, suka atau tidak suka), sedangkan root mean squared error (RMSE) digunakan untuk prediksi rating yang lebih kontinu.
+
+**Kelebihan**:
+
+- Mampu merekomendasikan item yang tidak memiliki informasi deskriptif (fitur minimal).
+- Menghasilkan rekomendasi dengan variasi yang lebih luas (menemukan hidden preferences).
+- Memanfaatkan pola interaksi seluruh pengguna, sehingga lebih fleksibel.
+
+**Kekurangan**:
+
+- Cold Start Problem untuk Pengguna Baru: Tidak dapat merekomendasikan jika pengguna belum memiliki riwayat interaksi.
+- Scalability Issue: Sulit diterapkan untuk dataset besar tanpa optimasi yang baik.
+- Sparsity Problem: Jika data interaksi sangat jarang, model sulit memberikan rekomendasi yang akurat.
+
+
+**Hasil dari **content based filtering****  
    berikut adalah movie yang disukai pengguna dimasa lalu :  
    |id	      |movie_name	           |genre|
    |-----------|----------------------|-----|
@@ -90,7 +317,7 @@ Data preparation yang digunakan oleh saya yaitu :
    
    dari hasil di atas dapat dilihat bahwa movie yang bergenre antar Adventuyre, Children, dan Fantasy menjadi yang direkomendasikan oleh sistem. Hal ini didasarkan pada kesukaan penonton atau pengguna pada masa lalu.
 
-3. hasil dari **collaborative content filtering**  
+**Hasil dari **collaborative content filtering****  
    berikut adalah movie berdasarkan rating yang adalah:
    
    Showing movie recommendations for users: 525
@@ -123,7 +350,9 @@ Data preparation yang digunakan oleh saya yaitu :
 Dari hasil rekomendasi di atas, diketahui bahwa Woodsman, The (2004) termasuk ke dalam genre Drama Dari 5 item yang direkomendasikan semuanya memiliki genre Drama (similar). Artinya, precision sistem kita sebesar 5/5 atau 100%.
 
 Teknik Evaluasi di atas adalah dengan menggunakan precission, rumus dari teknik ini adalah :
-![662c4327f27ee08d3e4d4b34_65777ee1fd55288155f28d37_precision_recall_k2](https://github.com/user-attachments/assets/2855fac9-acab-4ba5-9e96-4403431f0f5c)
+
+![662c4327f27ee08d3e4d4b34_65777ee1fd55288155f28d37_precision_recall_k2](https://github.com/user-attachments/assets/33bdffe6-c93e-4d49-aed7-ea139971d06c)
+
 
 2. hasil Evaluasi untuk Collaborative Filtering
 
@@ -138,12 +367,14 @@ Berikut adalah beberapa kelebihan dan kekurangan dari metrik ini:
 
 Formula RMSE:
 
-![RMSE1](https://github.com/user-attachments/assets/9ce93817-6087-488b-ab93-7d2866900378)
+![RMSE1](https://github.com/user-attachments/assets/081c9592-5568-4dfb-a835-99263e6c3dc9)
+
 
 cara menerapkan metrik tersebut adalah dengan menambahkan **_'metrics=[tf.keras.metrics.RootMeanSquaredError()]'_** pada model.compile.
 
 hasil dari model evaluasi visualisasi matriks adalah sebagai berikut :  
-![download (13)](https://github.com/user-attachments/assets/f484b79c-53c8-4cc9-a62d-5bf84952fd5b)
+
+![download (13)](https://github.com/user-attachments/assets/cf0b648e-8345-40cf-b6a6-a63bc0304c27)
 
 dari visualisasi proses training model di atas model berhenti di epochs sekitar 20. Dari proses ini, kita memperoleh nilai error akhir sebesar sekitar 0.195 dan error pada data validasi sebesar 0.207. 
 
@@ -154,6 +385,10 @@ Dalam proyek ini, saya berhasil membangun sistem rekomendasi film menggunakan du
 - Content-Based Filtering (CBF): Algoritma ini memberikan rekomendasi berdasarkan film yang disukai oleh pengguna di masa lalu. Berdasarkan hasil pengujian, sistem ini berhasil memberikan rekomendasi film dengan genre yang sangat mirip dengan genre film yang sebelumnya disukai oleh pengguna, menunjukkan akurasi yang tinggi dengan precision mencapai 100%.
 
 - Collaborative Filtering (CF): Algoritma ini menggunakan rating dari pengguna lain untuk memberikan rekomendasi. Dengan menggunakan RMSE untuk evaluasi, model ini menunjukkan bahwa hasil prediksi memiliki tingkat error yang rendah, yaitu sekitar 0.195 pada data pelatihan dan 0.207 pada data validasi. Hal ini menunjukkan bahwa model memiliki akurasi yang cukup baik dalam memprediksi film yang mungkin disukai oleh pengguna berdasarkan preferensi orang lain.
+
+
+## Referensi 
+* [[1]](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556) Faurina, R., & Sitanggang, E. (2023). Implementasi metode content-based filtering dan collaborative filtering pada sistem rekomendasi wisata di Bali. Tugas Cendekia, 22(4). https://doi.org/10.33633/tc.v22i4.8556 
 
   
 **---Ini adalah bagian akhir laporan---**
