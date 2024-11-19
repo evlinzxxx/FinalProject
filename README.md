@@ -1,37 +1,47 @@
-# Laporan Proyek Machine Learning - Sukma Ramadhan Asri
+# Laporan Proyek Machine Learning
+**Evlin Sitanggang**
+
+## Domain Proyek
+
+Nama *Project* : **Movie Recommendation - CF and CBF**
 
 ## Project Overview
 
-Sistem rekomendasi movie merupakan sistem yang merekomendasikan movie kepada penonton atau pengguna lainnya, rekomendasi ini contohnya diterapkan pada situs seperti netflix, iqiyi, dan wetv. Sistem rekomendasi yang saya buat ini didasarkan dengan peferensi kesukaan pengguna pada masa lalu, serta rating dari movie tersebut.
-
-Sistem rekomendasi telah menjadi lazim dalam beberapa tahun terakhir karena mereka menangani masalah kelebihan informasi dengan menyarankan pengguna produk yang paling relevan dari sejumlah besar data. Untuk produk media, rekomendasi film kolaboratif online berupaya membantu pengguna mengakses film pilihan mereka dengan menangkap tetangga yang persis sama di antara pengguna atau film dari peringkat umum historis mereka. Namun, karena data yang jarang, pemilihan tetangga menjadi lebih sulit dengan meningkatnya film dan pengguna dengan cepat.
+Sistem rekomendasi film adalah teknologi yang membantu pengguna menemukan film berdasarkan preferensi mereka. Contohnya dapat dilihat pada platform seperti Netflix, Prime Video, ViU dan WeTV, yang menggunakan data perilaku pengguna, seperti riwayat tontonan dan rating film, untuk memberikan saran yang relevan. Sistem ini memanfaatkan teknik collaborative filltering, yang menangkap kesamaan antara pengguna atau film berdasarkan pola historis. Namun, tantangan seperti kelangkaan data dan pertumbuhan jumlah film dan pengguna memerlukan strategi khusus untuk menjaga akurasi dan relevansi rekomendasi.
 
 referensi dari proyek overview yang saya buat dapat dilihat dari tautan berikut :
-[Journal of Visual Languages & Computing](https://www.sciencedirect.com/science/article/abs/pii/S1045926X14000901)
+[Jurnal: Techno.Com](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556)
 
 ## Business Understanding
 
 ### Problem Statements
 
-Bagaimana cara merekomendasikan movie yang disukai pengguna lain dapat direkomendasikan kepada pengguna lainnya juga ?
+Bagaimana cara merekomendasikan film yang populer di kalangan pengguna tertentu kepada pengguna lainnya?
 
 ### Goals
 
-Dapat membuat sistem rekomendasi yang akurat berdasarkan ratings dan aktivitas pengguna pada masa lalu.
+Mampu membangun sistem rekomendasi yang tepat dengan mengandalkan rating dan riwayat aktivitas pengguna sebelumnya.
 
 ### Solution approach
 
-Solusi yang saya buat yaitu dengan menggunakan 2 algoritma Machine Learning sistem rekomendasi,yaitu :
+Solusi yang saya kembangkan melibatkan penggunaan dua algoritma Machine Learning untuk sistem rekomendasi, yaitu:
 
-- **Content Based Filtering** adalah algoritma yang merekomendasikan item serupa dengan apa yang disukai pengguna, berdasarkan tindakan mereka sebelumnya atau umpan balik eksplisit.
-- **Collaborative Filtering**. adalah algoritma yang bergantung pada pendapat komunitas pengguna. Dia tidak memerlukan atribut untuk setiap itemnya.
+- **Content-Based Filtering**: Algoritma ini merekomendasikan item yang serupa dengan preferensi pengguna, berdasarkan interaksi mereka sebelumnya atau umpan balik yang diberikan.
+- **Collaborative Filtering**: Algoritma ini memanfaatkan pendapat atau preferensi pengguna lain dalam komunitas. Algoritma ini tidak memerlukan atribut spesifik dari setiap item.
 
-Algoritma Content Based Filtering digunakan untuk merekemondesikan movie berdasarkan aktivitas pengguna pada masa lalu, sedangkan algoritma Collabarative Filltering digunakan untuk merekomendasikan movie berdasarkan ratings yang paling tinggi.
+Algoritma Content-Based Filtering digunakan untuk merekomendasikan film berdasarkan riwayat aktivitas pengguna, sementara Collaborative Filtering digunakan untuk memberikan rekomendasi film berdasarkan rating tertinggi dari pengguna lain.
 
 ## Data Understanding
 
 Data atau dataset yang digunakan pada proyek machine learning ini adalah data **Movie Recommendation Data** yang didapat dari situs kaggle. Link dataset dapat dilihat dari tautan berikut [movie-recommendation-data](https://www.kaggle.com/rohan4050/movie-recommendation-data)
 
+File dataset terdiri dari:
+
+- ratings.csv: Penilaian pengguna terhadap film.
+- movies.csv: Daftar judul dan genre film.
+- links.csv: Link referensi film.
+- tags.csv: Kata kunci yang relevan dengan film.
+  
 Variabel-variabel pada movie-recommendation-data adalah sebagai berikut :
 
 - links : merupakan daftar link movie tersebut.
@@ -45,79 +55,105 @@ tahapan yang dilakukan mengenai data adalah dengan melakukan exploratory data an
 
 Data preparation yang digunakan oleh saya yaitu :
 
-- Mengatasi missing value : menyeleksi data apakah data tersebut ada yang kosong atau tidak, jika ada data kosong maka saya akan.menghapusnya
-- Membagi data menjadi data training dan validasi : untuk membagi data untuk dilatih dan validasi.
-- Menggabungkan variabel : untuk menggabungkan beberapa variabel berdasarkan id yang sifatnya unik (berbeda dari yang lain).
-- Mengurutan data : untuk mengurutkan data berdasarkan movieId secara asceding.
-- Mengatasi duplikasi data : untuk mengatasi data yang nilai atau isinya sama.
-- Konversi data menjadi iist : untuk mengubah data menjadi list
-- Membuat dictionary : Untuk membuat dictionary dari data yang ada.
-- Menggunakan TfidfVectorizer : untuk melakukan pembobotan.
-- melakukan preprocessing : untuk menghilangkan permasalahan-permasalahan yang dapat mengganggu hasil daripada proses data
-- mapping data : untuk memetakan data
+- Menangani data kosong: Mengecek apakah ada data yang hilang dan menghapus baris yang memiliki nilai kosong.
+- Pembagian data: Memisahkan data menjadi dua set, yaitu data untuk pelatihan dan untuk validasi.
+- Menggabungkan kolom: Mengintegrasikan beberapa kolom dengan ID unik agar data lebih terstruktur.
+- Menyusun data: Mengurutkan data berdasarkan ID film (movieId) secara menaik.
+- Mengatasi duplikasi: Mengidentifikasi dan menghapus data yang memiliki nilai atau informasi yang sama.
+- Mengonversi data ke dalam list: Mengubah struktur data menjadi dalam bentuk list.
+- Membuat kamus data: Mengorganisasi data ke dalam format dictionary.
+- Menggunakan TfidfVectorizer: Mengaplikasikan teknik pembobotan untuk memperhitungkan pentingnya kata-kata dalam data.
+- Melakukan pembersihan data: Menyelesaikan masalah yang bisa mengganggu hasil analisis atau pelatihan model.
+- Pemetaan data: Menyesuaikan dan menghubungkan data dengan format yang diperlukan untuk analisis.
 
 ## Modeling and Result
 
-- Proses modeling yang saya lakukan pada data ini adalah dengan membuat algoritma machine learning, yaitu content based filtering dan collabrative filtering. untuk algoritma content based filtering saya buat dengan apa yang disukai pengguna pada masa lalu, sedangkan untuk content based filtering, saya buat dengan memanfaatkan tingkat rating dari movie tersebut.
+- Proses pemodelan yang saya terapkan pada data ini melibatkan dua algoritma machine learning, yaitu content-based filtering dan collaborative filtering. Pada content-based filtering, saya fokus pada preferensi pengguna berdasarkan interaksi mereka sebelumnya dengan film yang telah mereka tonton. Sedangkan pada collaborative filtering, saya menggunakan data rating dari pengguna untuk merekomendasikan film yang paling disukai.
 
 - Berikut adalah hasil dari kedua algoritma tersebut :
 
 1. hasil dari **content based filtering**  
    berikut adalah movie yang disukai pengguna dimasa lalu :  
-   ![output-cbf-1user](https://raw.githubusercontent.com/onedayxzn/submission_file/master/output-cbf-1user.png)  
-   dari hasil di atas dapat dilihat bahwa pengguna menyukai movie yang berjudul jumanji (1995) yang bergenre Adventure, Children, Fantasy.
+   |id	      |movie_name	           |genre|
+   |-----------|----------------------|-----|
+   |1284	30820	|Woodsman, The (2004)  |Drama|
+
+   dari hasil di atas dapat dilihat bahwa pengguna menyukai movie yang berjudul Woodsman, The (2004) yang bergenre Drama.
    maka hasil top 5 rekomendasi berdasarkan algoritma conten based filtering adalah sebagai berikut :  
-   ![output-cbf-2recommendation](https://raw.githubusercontent.com/onedayxzn/submission_file/master/output-cbf-2recommend.png)  
+   |    |movie_name	                                       |genre|
+   |----|---------------------------------------------------|-----|
+   |0	  |Friendly Persuasion (1956)	                        |Drama|
+   |1	  |Gospel According to St. Matthew, The (Vangelo ...	|Drama|
+   |2	  |Lost Horizon (1937)	                              |Drama|
+   |3   |Ikiru (1952)	                                    |Drama|
+   |4   |Luther (2003)	                                    |Drama|
+   
    dari hasil di atas dapat dilihat bahwa movie yang bergenre antar Adventuyre, Children, dan Fantasy menjadi yang direkomendasikan oleh sistem. Hal ini didasarkan pada kesukaan penonton atau pengguna pada masa lalu.
 
-2. hasil dari **collaborative content filtering**  
-   berikut adalah movie berdasarkan rating yang ada :  
-   ![output-cbf-2recommendation](https://raw.githubusercontent.com/onedayxzn/submission_file/master/output-ccf.png)  
-   dari hasi di atas movie yang bergenre comedy menjadi movie yang paling tinggi ratingsnya. Kemudian top 10 movie yang direkomendasikan sistem adalah movie dengan genre comedy dan drama.
+3. hasil dari **collaborative content filtering**  
+   berikut adalah movie berdasarkan rating yang adalah:
+   
+   Showing movie recommendations for users: 525
+   
+   Movie with highest ratings from user
+   - Ferris Bueller's Day Off (1986) : Comedy
+   - Dogma (1999) : Adventure|Comedy|Fantasy
+   - Virgin Suicides, The (1999) : Drama|Romance
+   
+   Top 10 movie recommendation
+   |Movie Name          | Genre|
+   |--------------------|------|
+   |Pulp Fiction (1994) | Comedy,Crime,Drama,Thriller|
+   | One Flew Over the Cuckoo's Nest (1975) | Drama|
+   | Good, the Bad and the Ugly, The (Buono, il brutto, il cattivo, Il) (1966) | Action,Adventure,Western|
+   | Lawrence of Arabia (1962) | Adventure,Drama,War|
+   | Apocalypse Now (1979) | Action,Drama,War|
+   | Goodfellas (1990) | Crime,Drama|
+   | Ran (1985) | Drama,War|
+   | Godfather: Part II, The (1974) | Crime,Drama|
+   | Amadeus (1984) | Drama|
+   | Cool Hand Luke (1967) | Drama|
+   
+   dari hasi di atas movie yang bergenre comedy menjadi movie yang paling tinggi ratingnya yang direkomendasikan untuk user 525. Kemudian top 10 movie yang direkomendasikan sistem adalah movie dengan genre comedy dan drama.
 
 ## Evaluation
 
 1. hasil Evaluasi untuk Content Based Filtering
 
-Disini saya merekomendasikan film Jumanji (1995)
-
-![Rekomendasifilm](https://raw.githubusercontent.com/onedayxzn/submission_file/master/hasilCBFN1.png)
-
-hasil dari Top-N 5 dari film atau movie yang saya rekomendasikan adalah sebagai berikut :
-
-![RekomendasifilmTOP5](https://raw.githubusercontent.com/onedayxzn/submission_file/master/hasilCBFN5.png)
-
-Dari hasil rekomendasi di atas, diketahui bahwa Jumanji (1995) termasuk ke dalam genre Adventure|Children|Fantasy. Dari 5 item yang direkomendasikan, 3 item memiliki genre Adventure|Children|Fantasy (similar). Artinya, precision sistem kita sebesar 3/5 atau 60%.
+Dari hasil rekomendasi di atas, diketahui bahwa Woodsman, The (2004) termasuk ke dalam genre Drama Dari 5 item yang direkomendasikan semuanya memiliki genre Drama (similar). Artinya, precision sistem kita sebesar 5/5 atau 100%.
 
 Teknik Evaluasi di atas adalah dengan menggunakan precission, rumus dari teknik ini adalah :
-
-![rumusPrecission](<https://raw.githubusercontent.com/onedayxzn/submission_file/master/dos_819311f78d87da1e0fd8660171fa58e620211012160253%20(1).png>)
+![662c4327f27ee08d3e4d4b34_65777ee1fd55288155f28d37_precision_recall_k2](https://github.com/user-attachments/assets/2855fac9-acab-4ba5-9e96-4403431f0f5c)
 
 2. hasil Evaluasi untuk Collaborative Filtering
 
-Evaluasi metrik yang digunakan untuk mengukur kinerja model adalah metrik RMSE (Root Mean Squared Error).
+Metrik yang digunakan untuk mengevaluasi kinerja model dalam kasus ini adalah RMSE (Root Mean Squared Error).
 
-- RMSE adalah metode pengukuran dengan mengukur perbedaan nilai dari prediksi sebuah model sebagai estimasi atas nilai yang diobservasi. Root Mean Square Error adalah hasil dari akar kuadrat Mean Square Error. Keakuratan metode estimasi kesalahan pengukuran ditandai dengan adanya nilai RMSE yang kecil. Metode estimasi yang mempunyai Root Mean Square Error (RMSE) lebih kecil dikatakan lebih akurat daripada metode estimasi yang mempunyai Root Mean Square Error (RMSE) lebih besar
+RMSE digunakan untuk mengukur sejauh mana hasil prediksi model mendekati nilai yang sebenarnya. Ini dihitung dengan mengambil akar kuadrat dari rata-rata kuadrat selisih antara nilai yang diprediksi dan nilai yang teramati. Model dengan nilai RMSE yang lebih kecil dianggap memiliki akurasi yang lebih tinggi, karena kesalahan prediksinya lebih kecil.
 
-- Kelebihan dan kekurang matriks ini adalah :
+Berikut adalah beberapa kelebihan dan kekurangan dari metrik ini:
 
-  **kelebihan** : menghukum kesalahan besar lebih sehingga bisa lebih tepat dalam beberapa kasus.  
-  **Kekurangan** : memberikan bobot yang relatif tinggi untuk kesalahan besar. Ini berarti RMSE harus lebih berguna ketika kesalahan besar sangat tidak diinginkan
+- Kelebihan: RMSE memberikan penalti yang lebih besar pada kesalahan besar, sehingga dapat lebih akurat dalam kasus di mana kesalahan besar sangat merugikan.
+- Kekurangan: RMSE cenderung memberikan bobot yang lebih besar pada kesalahan besar, yang dapat menyebabkan hasil yang terlalu sensitif terhadap nilai ekstrem, terutama dalam dataset yang mengandung nilai yang sangat jauh dari prediksi.
 
-- formula dari matriks RMSE adalah sebagai berikut
+Formula RMSE:
 
-![formula matriks RMSE](https://raw.githubusercontent.com/onedayxzn/submission_file/master/rumusRMSE.png)
+![RMSE1](https://github.com/user-attachments/assets/9ce93817-6087-488b-ab93-7d2866900378)
 
-keterangan : <br>
-At : Nilai Aktual. <br>
-ft = Nilai hasil peramalan.<br>
-N = banyaknya dataset<br>
-
-cara menerapkan metrik tersebut adalah dengan menambahkan **_'metrics=[tf.keras.metrics.RootMeanSquaredError()]'_** pada model.compile sehingga menjadi seperti berikut :  
-![kode RMSE](https://raw.githubusercontent.com/onedayxzn/submission_file/master/kode%20RMSE.png)
+cara menerapkan metrik tersebut adalah dengan menambahkan **_'metrics=[tf.keras.metrics.RootMeanSquaredError()]'_** pada model.compile.
 
 hasil dari model evaluasi visualisasi matriks adalah sebagai berikut :  
-![hasil Evaluasi](https://raw.githubusercontent.com/onedayxzn/submission_file/master/hasilmodelmatric.png)
+![download (13)](https://github.com/user-attachments/assets/f484b79c-53c8-4cc9-a62d-5bf84952fd5b)
 
-dari visualisasi proses training model di atas cukup smooth dan model konvergen pada epochs sekitar 100. Dari proses ini, saya memperoleh nilai error akhir sebesar sekitar 0.19 dan error pada data validasi sebesar 0.20.  
+dari visualisasi proses training model di atas model berhenti di epochs sekitar 20. Dari proses ini, kita memperoleh nilai error akhir sebesar sekitar 0.195 dan error pada data validasi sebesar 0.207. 
+
+## Kesimpulan
+
+Dalam proyek ini, saya berhasil membangun sistem rekomendasi film menggunakan dua algoritma machine learning: Content-Based Filtering (CBF) dan Collaborative Filtering (CF). Kedua metode ini digunakan untuk memberikan rekomendasi film yang relevan berdasarkan riwayat aktivitas pengguna dan rating yang diberikan oleh pengguna lain.
+
+- Content-Based Filtering (CBF): Algoritma ini memberikan rekomendasi berdasarkan film yang disukai oleh pengguna di masa lalu. Berdasarkan hasil pengujian, sistem ini berhasil memberikan rekomendasi film dengan genre yang sangat mirip dengan genre film yang sebelumnya disukai oleh pengguna, menunjukkan akurasi yang tinggi dengan precision mencapai 100%.
+
+- Collaborative Filtering (CF): Algoritma ini menggunakan rating dari pengguna lain untuk memberikan rekomendasi. Dengan menggunakan RMSE untuk evaluasi, model ini menunjukkan bahwa hasil prediksi memiliki tingkat error yang rendah, yaitu sekitar 0.195 pada data pelatihan dan 0.207 pada data validasi. Hal ini menunjukkan bahwa model memiliki akurasi yang cukup baik dalam memprediksi film yang mungkin disukai oleh pengguna berdasarkan preferensi orang lain.
+
+  
 **---Ini adalah bagian akhir laporan---**
