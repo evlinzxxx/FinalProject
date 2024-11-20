@@ -17,7 +17,7 @@ Namun, dalam pengembangan sistem ini, terdapat beberapa masalah yang harus diata
 Latar belakang pemilihan masalah ini didasari oleh kebutuhan industri hiburan untuk meningkatkan keterlibatan pengguna melalui personalisasi konten. Dengan menyediakan rekomendasi yang tepat, platform dapat mempertahankan pelanggan lebih lama dan meningkatkan kepuasan pengguna. Oleh karena itu, pengembangan sistem rekomendasi yang efektif sangat penting untuk mengatasi tantangan ini sekaligus mendukung pengalaman pengguna yang lebih baik.
 
 referensi dari proyek overview yang saya buat dapat dilihat dari tautan berikut :
-[Jurnal: Techno.Com](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556?raw=true)
+[Jurnal: Techno.Com](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556)
 
 ## Business Understanding
 
@@ -407,7 +407,7 @@ Dari hasil rekomendasi di atas, diketahui bahwa Woodsman, The (2004) termasuk ke
 
 Teknik Evaluasi di atas adalah dengan menggunakan precission, rumus dari teknik ini adalah :
 
-![prediction](https://github.com/user-attachments/assets/b912928f-a95d-4b0b-a3c4-775957c9710c)
+![prediction](https://github.com/user-attachments/assets/b912928f-a95d-4b0b-a3c4-775957c9710c?raw=true)
 
 
 2. hasil Evaluasi untuk Collaborative Filtering
@@ -423,14 +423,14 @@ Berikut adalah beberapa kelebihan dan kekurangan dari metrik ini:
 
 Formula RMSE:
 
-![RMSE](https://github.com/user-attachments/assets/0422fb9e-a754-471a-a738-82f189322eec)
+![RMSE](https://github.com/user-attachments/assets/0422fb9e-a754-471a-a738-82f189322eec?raw=true)
 
 
 cara menerapkan metrik tersebut adalah dengan menambahkan **_'metrics=[tf.keras.metrics.RootMeanSquaredError()]'_** pada model.compile.
 
 hasil dari model evaluasi visualisasi matriks adalah sebagai berikut :  
 
-![evaluation](https://github.com/user-attachments/assets/7023782a-fb3c-4d0c-ab79-7a4eacc45cd0)
+![evaluation](https://github.com/user-attachments/assets/7023782a-fb3c-4d0c-ab79-7a4eacc45cd0?raw=true)
 
 dari visualisasi proses training model di atas model berhenti di epochs sekitar 20. Dari proses ini, kita memperoleh nilai error akhir sebesar sekitar 0.195 dan error pada data validasi sebesar 0.207. 
 
