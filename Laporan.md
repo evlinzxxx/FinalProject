@@ -17,7 +17,7 @@ Namun, dalam pengembangan sistem ini, terdapat beberapa masalah yang harus diata
 Latar belakang pemilihan masalah ini didasari oleh kebutuhan industri hiburan untuk meningkatkan keterlibatan pengguna melalui personalisasi konten. Dengan menyediakan rekomendasi yang tepat, platform dapat mempertahankan pelanggan lebih lama dan meningkatkan kepuasan pengguna. Oleh karena itu, pengembangan sistem rekomendasi yang efektif sangat penting untuk mengatasi tantangan ini sekaligus mendukung pengalaman pengguna yang lebih baik.
 
 referensi dari proyek overview yang saya buat dapat dilihat dari tautan berikut :
-[Jurnal: Techno.Com](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556)
+[Jurnal: Techno.Com](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556?raw=true)
 
 ## Business Understanding
 
