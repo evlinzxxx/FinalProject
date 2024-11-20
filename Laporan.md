@@ -58,7 +58,7 @@ Variabel-variabel pada movie-recommendation-data adalah sebagai berikut :
 
 Sebelum melakukan *modeling* dan *evaluation* dengan algoritma *Machine Learning* pada Notebook "Google Colaboratory", mari melihat sekilas pada *dataset* yang digunakan. Di bawah ini akan ditampilkan cuplikan dari dataset.
 
-Tabel 1 : Berikut adalah tampilan data links yang terdiri dari 9742 baris data dan 3 kolom:
+Tabel 1 : Berikut adalah tampilan data links yang terdiri dari 9742 baris data dan 3 kolom, dengan semua data tidak ada yang missing atau hilang serta duplikasi:
 
 |	|movieId	|imdbId	|tmdbId|
 |-|---------|-------|------|
@@ -74,7 +74,13 @@ Tabel 1 : Berikut adalah tampilan data links yang terdiri dari 9742 baris data d
 |9740	|193587	|8391976	|483455.0|
 |9741	|193609	|101726	|37891.0|
 
-Tabel 2 : Berikut adalah tampilan data movies (daftar film) yang terdiri dari 9742 baris data dan 3 kolom, terdiri dari id, judul dan genre movie nya:
+Berikut adalah informasi setiap variabel dalam Tabel 1:
+
+- `movieId`: ID unik yang mengidentifikasi sebuah film dalam dataset.
+- `imdbId`: ID unik dari film yang terdaftar di IMDb (Internet Movie Database).
+- `tmdbId`: ID unik dari film yang terdaftar di TMDb (The Movie Database).
+
+Tabel 2 : Berikut adalah tampilan data movies (daftar film) yang terdiri dari 9742 baris data dan 3 kolom, terdiri dari id, judul dan genre movie nya , dengan semua data tidak ada yang missing atau hilang serta duplikasi:
 
 |	  |movieId	|title	|genres|
 |---|---------|-------|------|
@@ -90,7 +96,13 @@ Tabel 2 : Berikut adalah tampilan data movies (daftar film) yang terdiri dari 97
 |9740	|193587	|Bungo Stray Dogs: Dead Apple (2018)	|Action, Animation|
 |9741	|193609	|Andrew Dice Clay: Dice Rules (1991)	|Comedy|
 
-Tabel 3 : Berikut adalah tampilan data ratings yang terdiri dari 100836 baris data dan 4 kolom, data yang berasal dari hasil rating yang diberikan penonton untuk sebuah movie. Data ini berisikan id user yang memberi rating, movie id yang diberikan rating, nilai ratingnya dan waktu saat user memberikan rating:
+Berikut adalah informasi setiap variabel dalam Tabel 2:
+
+- `movieId`: ID unik yang mengidentifikasi sebuah film dalam dataset.
+- `title`: Judul film, termasuk tahun rilis dalam tanda kurung.
+- `genres`: Kategori genre yang menggambarkan jenis film (misalnya, Action, Drama, Comedy, dll.).
+
+Tabel 3 : Berikut adalah tampilan data ratings yang terdiri dari 100836 baris data dan 4 kolom, data yang berasal dari hasil rating yang diberikan penonton untuk sebuah movie. Data ini berisikan id user yang memberi rating, movie id yang diberikan rating, nilai ratingnya dan waktu saat user memberikan rating, dengan semua data tidak ada yang missing atau hilang dan outlier serta duplikasi:
 
 |	|userId	|movieId	|rating	|timestamp|
 |-|-------|---------|-------|---------|
@@ -106,9 +118,16 @@ Tabel 3 : Berikut adalah tampilan data ratings yang terdiri dari 100836 baris da
 |100834	|610	|168252	|5.0	|1493846352|
 |100835	|610	|170875	|3.0	|1493846415|
 
+Berikut adalah informasi setiap variabel dalam Tabel 3:
+
+- `userId`: ID unik pengguna (penonton) yang memberikan rating.
+- `movieId`: ID film yang diberi rating.
+- `rating`: Nilai rating yang diberikan oleh pengguna (antara 0.5 hingga 5.0).
+- `timestamp`: Waktu ketika pengguna memberikan rating, dalam format waktu UNIX (jumlah detik sejak 1970-01-01).
+
 Dari tabel di atas, diketahui bahwa nilai maksimum ratings adalah 5.0 atau 5 dan nilai minimumnya adalah 0.5. Artinya, skala rating berkisar antara 0.5 hingga 5. 
 
-Tabel 3 : Berikut adalah tampilan data tags (tagar) yang terdiri dari 3683 baris data dan 4 kolom, yang berisi tagar konteks yang relevan dengan movie yang ditonton, movie id nya dan waktu memberikan tag nya:
+Tabel 4 : Berikut adalah tampilan data tags (tagar) yang terdiri dari 3683 baris data dan 4 kolom, yang berisi tagar konteks yang relevan dengan movie yang ditonton, movie id nya dan waktu memberikan tag nya, dengan semua data tidak ada yang missing atau hilang serta duplikasi:
 
 |	|userId	|movieId	|tag	|timestamp|
 |-|-------|---------|-----|---------|
@@ -124,6 +143,12 @@ Tabel 3 : Berikut adalah tampilan data tags (tagar) yang terdiri dari 3683 baris
 |3681	|610	|3265	|heroic bloodshed	|1493843978|
 |3682	|610	|168248	|Heroic Bloodshed	|1493844270|
 
+Berikut adalah informasi setiap variabel dalam Tabel 4:
+
+- `userId`: ID unik pengguna yang memberikan tag.
+- `movieId`: ID film yang diberi tag.
+- `tag`: Kata kunci atau tag yang diberikan untuk mendeskripsikan film, biasanya berupa kata atau frasa yang menggambarkan film tersebut (misalnya, "funny", "action-packed", dll.).
+- `timestamp`: Waktu ketika tag diberikan, dalam format waktu UNIX.
 
 ## Data Preparation
 
@@ -131,84 +156,139 @@ Proses data preparation adalah langkah penting dalam mempersiapkan data agar dap
 
 1. Menggabungkan Movie
    
-Menggabungkan berbagai file (seperti links, movies, ratings, dan tags) menggunakan fungsi np.concatenate().
+    Menggabungkan berbagai file (seperti links, movies, ratings, dan tags) menggunakan fungsi np.concatenate().
 Proses ini bertujuan untuk menggabungkan data berdasarkan kolom movieId, sehingga seluruh data terkait film dapat diintegrasikan dalam satu tempat.
 Data yang dihasilkan diurutkan menggunakan np.sort() dan nilai duplikat dihapus dengan np.unique().
 
-Output : Jumlah keseluruhan movieId yang unik.
+    Output : Jumlah keseluruhan movieId yang unik.
 
 2. Menggabungkan Seluruh User
    
-Menggabungkan data userId dari file ratings dan tags menggunakan np.concatenate().
+    Menggabungkan data userId dari file ratings dan tags menggunakan np.concatenate().
 Data diurutkan dan nilai duplikat dihapus.
 Proses ini memastikan bahwa semua informasi pengguna diintegrasikan tanpa ada pengulangan.
 
-Output : Jumlah keseluruhan userId yang unik.
+    Output : Jumlah keseluruhan userId yang unik.
 
 3. Membuat Dataframe movie_info
 
-Data dari links, movies, ratings, dan tags digabungkan menjadi satu dataframe menggunakan pd.concat().
+    Data dari links, movies, ratings, dan tags digabungkan menjadi satu dataframe menggunakan pd.concat().
 Selanjutnya, dataframe movie_info digabungkan dengan ratings berdasarkan movieId menggunakan pd.merge().
 Tujuan: Untuk menyatukan seluruh informasi film dengan data rating pengguna.
 Setelah penggabungan, dilakukan pengecekan missing values dengan movie.isnull().sum() untuk mengetahui data yang perlu dibersihkan atau diimputasi.
 
 4. Mengelompokkan Rating Berdasarkan movieId
 
-Data rating dikelompokkan menggunakan movie.groupby('movieId').sum().
+    Data rating dikelompokkan menggunakan movie.groupby('movieId').sum().
 Langkah ini memungkinkan kita untuk menganalisis total skor atau jumlah interaksi pada setiap film.
 
 5. Menggabungkan Data dengan Fitur Nama Movie
 
-Data rating disimpan dalam variabel all_movie_rate.
+    Data rating disimpan dalam variabel all_movie_rate.
 Kemudian, dataframe movies digabungkan dengan all_movie_rate berdasarkan movieId menggunakan pd.merge(). Proses ini menambahkan informasi title dan genres dari setiap film.
 Selanjutnya, dataframe tags digabungkan dengan hasil penggabungan sebelumnya berdasarkan movieId untuk menambahkan kata kunci (tags) yang relevan.
 Hasil akhir disimpan dalam variabel all_movie.
 
 6. Mengatasi Missing Value
 
-Mengecek missing value pada dataset all_movie dengan all_movie.isnull().sum().
+    Mengecek missing value pada dataset all_movie dengan all_movie.isnull().sum().
 Kolom tag ditemukan memiliki 52.549 data kosong. Data ini dibersihkan menggunakan fungsi dropna(), yang menghapus seluruh baris dengan nilai kosong.
-|       |0|
-|-------|-|
-|userId	|0|
-|movieId	|0|
-|rating	|0|
-|timestamp	|0|
-|title	|0|
-|genres	|0|
-|tag	|52549|
 
-Output: Dataset baru, all_movie_clean, dengan jumlah baris berkurang dari 285.762 menjadi 233.213.
+    |       |0|
+    |-------|-|
+    |userId	|0|
+    |movieId	|0|
+    |rating	|0|  
+    |timestamp	|0|
+    |title	|0|
+    |genres	|0|
+    |tag	|52549|
+
+    Output: Dataset baru, all_movie_clean, dengan jumlah baris berkurang dari 285.762 menjadi 233.213.
 Memastikan kembali tidak ada missing value pada dataset dengan all_movie_clean.isnull().sum().
 
 7. Mengurutkan Data Berdasarkan movieId
 
-Dataset all_movie_clean diurutkan berdasarkan kolom movieId menggunakan sort_values() dan disimpan dalam variabel fix_movie.
+    Dataset all_movie_clean diurutkan berdasarkan kolom movieId menggunakan sort_values() dan disimpan dalam variabel fix_movie.
 Hal ini bertujuan untuk mempermudah proses pemetaan dan analisis.
 Mengecek jumlah movieId unik dengan len(fix_movie.movieId.unique()).
 
 8. Menghapus Data Duplikat
-
-Dataset fix_movie disimpan kembali ke dalam variabel preparation.
+  
+    Dataset fix_movie disimpan kembali ke dalam variabel preparation.
 Dilakukan penghapusan data duplikat berdasarkan kolom movieId dengan drop_duplicates('movieId').
 Langkah ini memastikan setiap film hanya muncul sekali dalam dataset.
 
 9. Konversi Data ke Bentuk List
 
-Data dari kolom movieId, title, dan genres diubah menjadi list menggunakan fungsi tolist():
+    Data dari kolom movieId, title, dan genres diubah menjadi list menggunakan fungsi tolist():
 movie_id: List dari semua movieId.
 movie_name: List dari semua judul film.
 movie_genre: List dari semua genre film.
 
-Output: Tiga variabel berbentuk list dengan jumlah elemen yang sama.
+    Output: Tiga variabel berbentuk list dengan jumlah elemen yang sama.
 
 10. Membuat Dictionary Dataframe
 
-Menggunakan tiga list yang telah dibuat (movie_id, movie_name, movie_genre), dibuat sebuah dataframe movie_new dengan pasangan key-value:
+    Menggunakan tiga list yang telah dibuat (movie_id, movie_name, movie_genre), dibuat sebuah dataframe movie_new dengan pasangan key-value:
 id: Berisi movie_id.
 movie_name: Berisi movie_name.
 genre: Berisi movie_genre.
 Dataframe ini merupakan hasil akhir dari data preparation, yang siap digunakan untuk pemodelan.
+
+11. TFIDF Preparation
+
+    Melakukan transformasi TFIDF pada kolom tag untuk mengubah kata-kata dalam tag menjadi representasi numerik yang siap digunakan dalam model rekomendasi.
+
+12. Pengacakan Data
+
+    Melakukan pengacakan (shuffling) data untuk memastikan distribusi yang acak pada saat melakukan pemodelan.
+
+14. Encoding
+
+    Melakukan encoding pada data seperti movieId dan userId untuk memastikan data dapat diterima oleh algoritma rekomendasi berbasis collaborative filtering.
+
+## Preparation Collaborative Filtering
+
+Proses data preparation terdiri dari beberapa langkah yang terstruktur dan terperinci, yang dimulai dengan encoding ID pengguna dan film, hingga membagi data untuk pelatihan dan validasi, serta mempersiapkan model rekomendasi berbasis neural network. Berikut adalah tahapannya:
+
+1. User Encoding
+
+Mengambil ID pengguna yang unik dan mengubahnya menjadi format numerik menggunakan dua kamus:
+- user_to_user_encoded: Mempetakan userId ke angka numerik.
+- user_encoded_to_user: Membalikkan pemetaan tersebut untuk mengonversi angka numerik kembali ke userId.
+
+2. Movie Encoding
+
+Proses serupa dilakukan untuk kolom movieId:
+- movie_to_movie_encoded: Mempetakan movieId ke angka numerik.
+- movie_encoded_to_movie: Membalikkan pemetaan tersebut.
+
+3. Menambahkan Kolom ke Dataframe
+
+Kolom genres dan movies ditambahkan ke dataframe dengan memetakan userId dan movieId ke ID terencode.
+
+4. Menampilkan Statistik Dasar
+
+- Menghitung jumlah pengguna dan film dalam dataset.
+- Mengonversi kolom rating menjadi tipe data float32 dan mencari nilai rating minimum dan maksimum.
+
+5. Pembagian Data untuk Training dan Validasi
+
+- Data diacak menggunakan sample(frac=1, random_state=42) untuk memastikan distribusi yang acak.
+- Membagi data menjadi training dan validation set dengan proporsi 80:20.
+- Variabel x berisi fitur genres dan movies, sedangkan variabel y berisi rating yang dinormalisasi.
+
+6. Mempersiapkan Model RecommenderNet
+
+- Model berbasis neural network dibuat dengan menggunakan teknik embedding untuk pengguna dan film.
+- Dua embedding layer dibuat: satu untuk pengguna (user_embedding) dan satu lagi untuk film (movie_embedding).
+- Bias untuk pengguna (user_bias) dan film (movie_bias) juga ditambahkan untuk menangani perbedaan preferensi individu.
+- Model menggunakan perkalian titik (tf.tensordot) untuk menghasilkan interaksi antara pengguna dan film.
+
+7. Output Model
+
+Model mengeluarkan prediksi rating dengan fungsi aktivasi sigmoid yang menghasilkan nilai antara 0 dan 1, menggambarkan prediksi rating pengguna terhadap film.
 
 
 ## Modeling and Result
@@ -351,7 +431,7 @@ Dari hasil rekomendasi di atas, diketahui bahwa Woodsman, The (2004) termasuk ke
 
 Teknik Evaluasi di atas adalah dengan menggunakan precission, rumus dari teknik ini adalah :
 
-![662c4327f27ee08d3e4d4b34_65777ee1fd55288155f28d37_precision_recall_k2](https://github.com/user-attachments/assets/33bdffe6-c93e-4d49-aed7-ea139971d06c)
+![662c4327f27ee08d3e4d4b34_65777ee1fd55288155f28d37_precision_recall_k2](https://github.com/user-attachments/assets/38cd0a2d-7c68-4f4e-a45c-19228cf92514)
 
 
 2. hasil Evaluasi untuk Collaborative Filtering
@@ -367,14 +447,15 @@ Berikut adalah beberapa kelebihan dan kekurangan dari metrik ini:
 
 Formula RMSE:
 
-![RMSE1](https://github.com/user-attachments/assets/081c9592-5568-4dfb-a835-99263e6c3dc9)
+![RMSE1](https://github.com/user-attachments/assets/28973acd-efe6-45b3-8324-e2f9b4379fb2)
 
 
 cara menerapkan metrik tersebut adalah dengan menambahkan **_'metrics=[tf.keras.metrics.RootMeanSquaredError()]'_** pada model.compile.
 
 hasil dari model evaluasi visualisasi matriks adalah sebagai berikut :  
 
-![download (13)](https://github.com/user-attachments/assets/cf0b648e-8345-40cf-b6a6-a63bc0304c27)
+![download (13)](https://github.com/user-attachments/assets/8f08a202-0771-4be6-92fd-127db723e2d9)
+
 
 dari visualisasi proses training model di atas model berhenti di epochs sekitar 20. Dari proses ini, kita memperoleh nilai error akhir sebesar sekitar 0.195 dan error pada data validasi sebesar 0.207. 
 
