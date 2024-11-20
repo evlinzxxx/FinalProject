@@ -237,18 +237,6 @@ movie_genre: List dari semua genre film.
       
     Dataframe ini merupakan hasil akhir dari data preparation, yang siap digunakan untuk pemodelan.
 
-11. TFIDF Preparation
-
-    Melakukan transformasi TFIDF pada kolom tag untuk mengubah kata-kata dalam tag menjadi representasi numerik yang siap digunakan dalam model rekomendasi.
-
-12. Pengacakan Data
-
-    Melakukan pengacakan (shuffling) data untuk memastikan distribusi yang acak pada saat melakukan pemodelan.
-
-14. Encoding
-
-    Melakukan encoding pada data seperti movieId dan userId untuk memastikan data dapat diterima oleh algoritma rekomendasi berbasis collaborative filtering.
-
 ## Preparation Collaborative Filtering
 
 Proses data preparation terdiri dari beberapa langkah yang terstruktur dan terperinci, yang dimulai dengan encoding ID pengguna dan film, hingga membagi data untuk pelatihan dan validasi, serta mempersiapkan model rekomendasi berbasis neural network. Berikut adalah tahapannya:
@@ -276,20 +264,9 @@ Kolom genres dan movies ditambahkan ke dataframe dengan memetakan userId dan mov
 
 5. Pembagian Data untuk Training dan Validasi
 
-- Data diacak menggunakan sample(frac=1, random_state=42) untuk memastikan distribusi yang acak.
+- Dilakukan pengacakan (shuffling) pada data untuk memastikan distribusi yang acak pada saat melakukan pemodelan, dengan menggunakan `sample(frac=1, random_state=42)` untuk memastikan distribusi yang acak.
 - Membagi data menjadi training dan validation set dengan proporsi 80:20.
 - Variabel x berisi fitur genres dan movies, sedangkan variabel y berisi rating yang dinormalisasi.
-
-6. Mempersiapkan Model RecommenderNet
-
-- Model berbasis neural network dibuat dengan menggunakan teknik embedding untuk pengguna dan film.
-- Dua embedding layer dibuat: satu untuk pengguna (user_embedding) dan satu lagi untuk film (movie_embedding).
-- Bias untuk pengguna (user_bias) dan film (movie_bias) juga ditambahkan untuk menangani perbedaan preferensi individu.
-- Model menggunakan perkalian titik (tf.tensordot) untuk menghasilkan interaksi antara pengguna dan film.
-
-7. Output Model
-
-Model mengeluarkan prediksi rating dengan fungsi aktivasi sigmoid yang menghasilkan nilai antara 0 dan 1, menggambarkan prediksi rating pengguna terhadap film.
 
 
 ## Modeling and Result
