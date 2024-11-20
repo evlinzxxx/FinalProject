@@ -408,6 +408,7 @@ Dari hasil rekomendasi di atas, diketahui bahwa Woodsman, The (2004) termasuk ke
 Teknik Evaluasi di atas adalah dengan menggunakan precission, rumus dari teknik ini adalah :
 
 ![prediction](https://github.com/user-attachments/assets/b0d4f1c5-001b-4d8c-ae7a-5cc1443836f7)
+![prediction](https://github.com/evlinzxxx/FinalProject/blob/b6339346092a9e262285c68d6b72ffac3022522b/prediction.png)
 
 2. hasil Evaluasi untuk Collaborative Filtering
 
