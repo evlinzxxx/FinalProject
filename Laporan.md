@@ -407,7 +407,6 @@ Dari hasil rekomendasi di atas, diketahui bahwa Woodsman, The (2004) termasuk ke
 
 Teknik Evaluasi di atas adalah dengan menggunakan precission, rumus dari teknik ini adalah :
 
-![prediction](https://github.com/user-attachments/assets/b0d4f1c5-001b-4d8c-ae7a-5cc1443836f7)
 ![prediction](https://github.com/evlinzxxx/FinalProject/blob/b6339346092a9e262285c68d6b72ffac3022522b/prediction.png)
 
 2. hasil Evaluasi untuk Collaborative Filtering
@@ -423,14 +422,14 @@ Berikut adalah beberapa kelebihan dan kekurangan dari metrik ini:
 
 Formula RMSE:
 
-![RMSE](https://github.com/user-attachments/assets/e5300ae5-afbd-4652-b5b3-d4e431d47d35)
+![RMSE](https://github.com/evlinzxxx/FinalProject/blob/ec2a34d4eb04ceb554efe339fb458872c250473d/RMSE.jpg)
 
 
 cara menerapkan metrik tersebut adalah dengan menambahkan **_'metrics=[tf.keras.metrics.RootMeanSquaredError()]'_** pada model.compile.
 
 hasil dari model evaluasi visualisasi matriks adalah sebagai berikut :  
 
-![evaluation](https://github.com/user-attachments/assets/b5b69c8c-94c5-40ea-83e6-11978a9806dd)
+![evaluation](https://github.com/evlinzxxx/FinalProject/blob/ec2a34d4eb04ceb554efe339fb458872c250473d/evaluation.png)
 
 dari visualisasi proses training model di atas model berhenti di epochs sekitar 20. Dari proses ini, kita memperoleh nilai error akhir sebesar sekitar 0.195 dan error pada data validasi sebesar 0.207. 
 
