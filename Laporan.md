@@ -231,10 +231,10 @@ movie_genre: List dari semua genre film.
 10. Membuat Dictionary Dataframe
 
     Menggunakan tiga list yang telah dibuat (movie_id, movie_name, movie_genre), dibuat sebuah dataframe movie_new dengan pasangan key-value:
-id: Berisi movie_id.
-movie_name: Berisi movie_name.
-genre: Berisi movie_genre.
-Dataframe ini merupakan hasil akhir dari data preparation, yang siap digunakan untuk pemodelan.
+    - id: Berisi movie_id.
+    - movie_name: Berisi movie_name.
+    - genre: Berisi movie_genre.
+    Dataframe ini merupakan hasil akhir dari data preparation, yang siap digunakan untuk pemodelan.
 
 11. TFIDF Preparation
 
