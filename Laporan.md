@@ -271,10 +271,8 @@ Kolom genres dan movies ditambahkan ke dataframe dengan memetakan userId dan mov
 
 ## Modeling and Result
 
-- Proses pemodelan yang saya terapkan pada data ini melibatkan dua algoritma machine learning, yaitu content-based filtering dan collaborative filtering. Pada content-based filtering, saya fokus pada preferensi pengguna berdasarkan interaksi mereka sebelumnya dengan film yang telah mereka tonton. Sedangkan pada collaborative filtering, saya menggunakan data rating dari pengguna untuk merekomendasikan film yang paling disukai.
-
-- Berikut adalah hasil dari kedua algoritma tersebut :
- ### Content-Based Filtering
+- Proses pemodelan yang saya terapkan pada data ini melibatkan dua algoritma machine learning, yaitu content-based filtering dan collaborative filtering. Pada content-based filtering, saya fokus pada preferensi pengguna berdasarkan interaksi mereka sebelumnya dengan film yang telah mereka tonton. Sedangkan pada collaborative filtering, saya menggunakan data rating dari pengguna untuk merekomendasikan film yang paling disukai. Berikut adalah hasil dari kedua algoritma tersebut :
+ ### 1. Content-Based Filtering
 
 **Cara Kerja**:
 
@@ -305,7 +303,7 @@ Langkah:
   
 2.Cosine Similarity: Tidak memiliki parameter langsung, tetapi dihitung berdasarkan vektor item.
 
-### Collaborative Filtering
+### 2. Collaborative Filtering
 
 **Cara Kerja**:
 
