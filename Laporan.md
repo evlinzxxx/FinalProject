@@ -222,9 +222,9 @@ Langkah ini memastikan setiap film hanya muncul sekali dalam dataset.
 9. Konversi Data ke Bentuk List
 
     Data dari kolom movieId, title, dan genres diubah menjadi list menggunakan fungsi tolist():
-movie_id: List dari semua movieId.
-movie_name: List dari semua judul film.
-movie_genre: List dari semua genre film.
+    - movie_id: List dari semua movieId.
+    - movie_name: List dari semua judul film.
+    - movie_genre: List dari semua genre film.
 
     Output: Tiga variabel berbentuk list dengan jumlah elemen yang sama.
 
@@ -409,7 +409,7 @@ Dari hasil rekomendasi di atas, diketahui bahwa Woodsman, The (2004) termasuk ke
 
 Teknik Evaluasi di atas adalah dengan menggunakan precission, rumus dari teknik ini adalah :
 
-![662c4327f27ee08d3e4d4b34_65777ee1fd55288155f28d37_precision_recall_k2](https://github.com/user-attachments/assets/38cd0a2d-7c68-4f4e-a45c-19228cf92514)
+![prediction](https://github.com/user-attachments/assets/b912928f-a95d-4b0b-a3c4-775957c9710c)
 
 
 2. hasil Evaluasi untuk Collaborative Filtering
@@ -425,15 +425,14 @@ Berikut adalah beberapa kelebihan dan kekurangan dari metrik ini:
 
 Formula RMSE:
 
-![RMSE1](https://github.com/user-attachments/assets/28973acd-efe6-45b3-8324-e2f9b4379fb2)
+![RMSE](https://github.com/user-attachments/assets/0422fb9e-a754-471a-a738-82f189322eec)
 
 
 cara menerapkan metrik tersebut adalah dengan menambahkan **_'metrics=[tf.keras.metrics.RootMeanSquaredError()]'_** pada model.compile.
 
 hasil dari model evaluasi visualisasi matriks adalah sebagai berikut :  
 
-![download (13)](https://github.com/user-attachments/assets/8f08a202-0771-4be6-92fd-127db723e2d9)
-
+![evaluation](https://github.com/user-attachments/assets/7023782a-fb3c-4d0c-ab79-7a4eacc45cd0)
 
 dari visualisasi proses training model di atas model berhenti di epochs sekitar 20. Dari proses ini, kita memperoleh nilai error akhir sebesar sekitar 0.195 dan error pada data validasi sebesar 0.207. 
 
