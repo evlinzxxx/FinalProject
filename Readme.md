@@ -1,9 +1,4 @@
-# Laporan Proyek Machine Learning
-**Evlin Sitanggang**
-
-## Domain Proyek
-
-Nama *Project* : **Movie Recommendation - CF and CBF**
+## Movie Recommendation - Content Based Filtering and Collaborative Filtering
 
 ## Project Overview
 
@@ -446,4 +441,4 @@ Dalam proyek ini, saya berhasil membangun sistem rekomendasi film menggunakan du
 * [[1]](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556) Faurina, R., & Sitanggang, E. (2023). Implementasi metode content-based filtering dan collaborative filtering pada sistem rekomendasi wisata di Bali. Tugas Cendekia, 22(4). https://doi.org/10.33633/tc.v22i4.8556 
 
   
-**---Ini adalah bagian akhir laporan---**
+##### Proyek Final Machine Learning Terapan
