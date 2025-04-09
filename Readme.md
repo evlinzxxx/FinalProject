@@ -1,7 +1,5 @@
 ## Movie Recommendation - Content Based Filtering and Collaborative Filtering
 
-## Project Overview
-
 Sistem rekomendasi film adalah teknologi yang dirancang untuk membantu pengguna menemukan film yang sesuai dengan preferensi mereka [[1]](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556). Contohnya dapat ditemukan pada platform seperti Netflix, Prime Video, ViU, dan WeTV, yang memanfaatkan data perilaku pengguna seperti riwayat tontonan dan penilaian (rating) film untuk memberikan saran yang relevan. Sistem ini menggunakan berbagai teknik, salah satunya adalah **Collaborative Filtering**, yang mengidentifikasi pola kesamaan antara pengguna atau film berdasarkan data historis.
 
 Namun, dalam pengembangan sistem ini, terdapat beberapa masalah yang harus diatasi:  
