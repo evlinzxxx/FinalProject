@@ -438,5 +438,3 @@ Dalam proyek ini, saya berhasil membangun sistem rekomendasi film menggunakan du
 ## Referensi 
 * [[1]](https://publikasi.dinus.ac.id/index.php/technoc/article/view/8556) Faurina, R., & Sitanggang, E. (2023). Implementasi metode content-based filtering dan collaborative filtering pada sistem rekomendasi wisata di Bali. Tugas Cendekia, 22(4). https://doi.org/10.33633/tc.v22i4.8556 
 
-  
-##### Proyek Final Machine Learning Terapan
